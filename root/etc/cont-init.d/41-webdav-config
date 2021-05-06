@@ -6,5 +6,6 @@ chown abc:abc \
 chmod 777 /dataWebDAV
 
 # set webdav config
-[[ ! -f /config/nginx/site-confs/webdav ]] && \
- cp /defaults/webdav /config/nginx/site-confs/webdav
+if [ ! -f /config/nginx/site-confs/webdav ]; then
+cp /defaults/webdav /config/nginx/site-confs/webdav
+fi
