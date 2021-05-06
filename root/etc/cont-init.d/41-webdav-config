@@ -7,4 +7,4 @@ chmod 777 /dataWebDAV
 
 # set webdav config
 [[ ! -f /config/nginx/site-confs/webdav ]] && \
-cp /defaults/webdav /config/nginx/site-confs/
+ cp /defaults/webdav /config/nginx/site-confs/webdav
