@@ -1,0 +1,60 @@
+server {
+listen 888;
+
+
+access_log  /dev/stdout;
+error_log   /dev/stdout info;
+
+# MAX size of uploaded file, 0 mean unlimited
+client_max_body_size    500M;
+
+
+autoindex on;
+autoindex_format xml;
+
+set $webdav_root "/dataWebDAV";
+set $i "";
+default_type  application/octet-stream;
+location / {
+
+if ($request_method = MKCOL) { rewrite ^(.*[^/])$ $1/ break; }  #can not create folder
+
+set $dest $http_destination;
+
+if (-d $request_filename) {                                     #can not rename 
+rewrite ^(.*[^/])$ $1/;
+set $dest $dest/;
+}
+
+if ($request_method ~ (MOVE|COPY)) {                            # can not copy and move 
+more_set_input_headers 'Destination: $dest';
+}
+
+if ($request_method = PROPPATCH) {                              # can not upload file at windows
+add_header      Content-Type 'text/xml';
+return          207 '<?xml version="1.0"?><a:multistatus xmlns:a="DAV:"><a:response><a:propstat><a:status>HTTP/1.1 200 OK</a:status></a:propstat></a:response></a:multistatus>';
+}
+
+
+charset utf-8;
+create_full_put_path on;
+dav_methods PUT DELETE MKCOL COPY MOVE;
+dav_ext_methods PROPFIND OPTIONS;
+dav_access user:rw group:rw all:rw;
+auth_basic "Restricted";
+auth_basic_user_file /etc/nginx/htpasswd;
+
+root $webdav_root;
+if ($request_method = PUT) {
+set $i "${i}a";
+}
+if (-f $request_filename) {
+set $i "${i}a";
+}
+if ($i ~ aa) {
+return 405;
+}
+
+
+}
+}
