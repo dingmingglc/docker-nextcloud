@@ -1,5 +1,5 @@
 #FROM ghcr.io/linuxserver/baseimage-alpine-nginx:3.13
-FROM dingmingglc/baseimage-alpine-nginx:latest
+FROM ghcr.io/linuxserver/nginx
 
 # set version label
 ARG BUILD_DATE
@@ -114,4 +114,5 @@ COPY root/ /
 
 # ports and volumes
 EXPOSE 443
-VOLUME /config /data
+#VOLUME /config /data
+VOLUME /config /data /dataWebDAV
