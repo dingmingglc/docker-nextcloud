@@ -1,3 +1,7 @@
+nextcloud port:443
+webdav port:888
+
+
 docker run -d \
 --name=nextcloud \
 -e USERNAME=webdav \
