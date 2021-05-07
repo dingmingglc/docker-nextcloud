@@ -2,8 +2,8 @@
 
 # permissions
 chown abc:abc \
-/dataWebDAV
-chmod 777 /dataWebDAV
+/data_webdav
+chmod 777 /data_webdav
 
 # set webdav config
 if [ ! -f /config/nginx/site-confs/webdav ]; then
