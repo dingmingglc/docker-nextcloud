@@ -115,4 +115,4 @@ COPY root/ /
 # ports and volumes
 EXPOSE 443
 #VOLUME /config /data
-VOLUME /config /data /dataWebDAV
+VOLUME /config /data /data_webdav
